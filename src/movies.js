@@ -93,6 +93,34 @@ function turnHoursToMinutes(array){
   return allMovieDurations
   }
 // BONUS - Iteration 8: Best yearly rate average - Best yearly rate average
-function bestYearAvg(){
+function bestYearAvg(array){
+ if(array.length===0)return null;
+
+  let arraysOfSameYearMovies = array.map((elem,index,arr)=>{
+    let sameYearMovies = arr.filter(movie=>movie.year===elem.year)
+
+    let avgsForYears= sameYearMovies.map(elem=>elem.rate).reduce((acc,val)=>acc+val,0)/sameYearMovies.length
+
+    let years = sameYearMovies.map(movie=>movie.year)[0];
+
+ return arrayOfavgsAndYears =  {
+    avg:avgsForYears,
+    year: years
+  }
+
+
+ })
+
+let finalArray= arraysOfSameYearMovies.sort((a,b)=>{
+ if(a.avg===b.avg){
+   return a.year-b.year
+ }else {
+   return b.avg-a.avg
+ }
+})
+
+let bestYearMovie = Object.assign({rate:finalArray[0].avg, year:finalArray[0].year})
+
+return `The best year was ${bestYearMovie.year} with an average rate of ${bestYearMovie.rate}`
 
 }
