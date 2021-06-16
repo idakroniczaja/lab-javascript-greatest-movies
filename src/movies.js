@@ -96,13 +96,14 @@ function turnHoursToMinutes(array){
 function bestYearAvg(array){
  if(array.length===0)return null;
 
+ //within the entire movie array, make arrays of movies with same year
   let arraysOfSameYearMovies = array.map((elem,index,arr)=>{
     let sameYearMovies = arr.filter(movie=>movie.year===elem.year)
-
+//withing those arrays of the same year movies calculate average for each year
     let avgsForYears= sameYearMovies.map(elem=>elem.rate).reduce((acc,val)=>acc+val,0)/sameYearMovies.length
 
     let years = sameYearMovies.map(movie=>movie.year)[0];
-
+//and return onlu those properitise with values you need
  return arrayOfavgsAndYears =  {
     avg:avgsForYears,
     year: years
@@ -111,6 +112,8 @@ function bestYearAvg(array){
 
  })
 
+//sort array which you get as a result of previuous iteration by avg rate, 
+//but if they have the same rate, sort them by year of release(from older to yanger)
 let finalArray= arraysOfSameYearMovies.sort((a,b)=>{
  if(a.avg===b.avg){
    return a.year-b.year
@@ -118,7 +121,7 @@ let finalArray= arraysOfSameYearMovies.sort((a,b)=>{
    return b.avg-a.avg
  }
 })
-
+//finaly, crate object from the first element of the finalArray(that is the movie whit the highest rate and oldest one)
 let bestYearMovie = Object.assign({rate:finalArray[0].avg, year:finalArray[0].year})
 
 return `The best year was ${bestYearMovie.year} with an average rate of ${bestYearMovie.rate}`
